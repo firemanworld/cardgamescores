@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddPlayersActivity" >
+
+    <LinearLayout
+        android:id="@+id/players_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:orientation="vertical"
+        tools:ignore="UselessLeaf" >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/new_user_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/add_player_hint"
+                android:inputType="textCapWords" />
+
+            <Button
+                android:id="@+id/new_user_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="addUser"
+                android:text="@string/add_player_add" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/default_max_score_title" />
+
+            <EditText
+                android:id="@+id/max_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/default_max_score_title"
+                android:inputType="number"
+                android:text="@string/default_max_score" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/start_game"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:onClick="startGame"
+            android:text="@string/add_player_start" />
+
+    </LinearLayout>
+
+</LinearLayout>

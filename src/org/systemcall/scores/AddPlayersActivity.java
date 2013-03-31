@@ -65,7 +65,12 @@ public class AddPlayersActivity extends Activity {
 	public void addUser(View view) {
 		TextView textView = (TextView) findViewById(R.id.new_user_name);
 		String userName = textView.getText().toString();
-		users += "," + userName;
+		userName = userName.trim();
+		if (userName.length() == 0)
+			return;
+		if (users.length() > 0)
+			users += ",";
+		users += userName;
 		_addUser(userName);
 		textView.setText("");
 	}
@@ -80,7 +85,7 @@ public class AddPlayersActivity extends Activity {
 	}
 
 	private void updatePreferences() {
-		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.app_pref_key), Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
 		editor.putInt(getString(R.string.saved_max), max);
 		editor.putString(getString(R.string.saved_users), users);

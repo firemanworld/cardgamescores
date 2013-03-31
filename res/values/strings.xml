@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Card Game Scores</string>
+    <string name="app_pref_key">CardGameScores_Preferences.xml</string>
     <string name="menu_settings">Settings</string>
     <string name="new_game_button">New Game</string>
     <string name="title_activity_add_players">Add Players</string>

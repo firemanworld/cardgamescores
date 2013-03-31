@@ -28,10 +28,14 @@ public class CardGameScores extends Activity {
 
 	public void lastGame(View view) {
 		Intent intent = new Intent(this, AddPlayersActivity.class);
-		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-		intent.putExtra(MAX_POINTS, sharedPref.getInt(getString(R.string.saved_max), 200));
-		intent.putExtra(USER_LIST, sharedPref.getString(getString(R.string.saved_users), ""));
-		intent.putExtra(WIN_GAME, sharedPref.getBoolean(getString(R.string.saved_win), false));
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.app_pref_key), Context.MODE_PRIVATE);
+		int max = sharedPref.getInt(getString(R.string.saved_max), 0);
+		String users = sharedPref.getString(getString(R.string.saved_users), "");
+		boolean win = sharedPref.getBoolean(getString(R.string.saved_win), false);
+
+		intent.putExtra(MAX_POINTS, max);
+		intent.putExtra(USER_LIST, users);
+		intent.putExtra(WIN_GAME, win);
 		startActivity(intent);
 	}
 }

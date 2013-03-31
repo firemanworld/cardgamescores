@@ -11,8 +11,15 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_game">Game</string>
     <string name="game_update_scores">Update scores</string>
-    <string name="default_max_score">100</string>
+    <string name="default_max_score">200</string>
     <string name="default_max_score_title">Maximum Score</string>
     <string name="welcome_message">This is a simple score keeping app. Start the game by adding players on the next screen and setting the maximum points to win (or lose). On the game screen, use the text input to update the scores at the end of each round (empty inputs will be considered zero). Whenever one of the scores is higher than the maximum score set, the game stops and the winner (or loser) is announced.</string>
+    <string name="last_game_button">Last Game</string>
+    <string name="saved_max">card_game_max</string>
+    <string name="saved_users">card_game_users</string>
+    <string name="default_score_type_title">Reach Maximum and </string>
+    <string name="saved_win">card_game_win</string>
+    <string name="lose_game">Lose</string>
+    <string name="win_game">Win</string>
 
 </resources>

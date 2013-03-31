@@ -1,5 +1,6 @@
 package org.systemcall.scores;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 public class GameActivity extends Activity {
 	private Game game;
 	private int ID_OFFSET = 1024*1024;
+	private int max;
+	private String users;
+	private boolean win;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +29,9 @@ public class GameActivity extends Activity {
 
 	private void initGame() {
         Intent intent = getIntent();
-        int max = intent.getIntExtra(AddPlayersActivity.MAX_POINTS, 100);
-		String users = intent.getStringExtra(AddPlayersActivity.USER_LIST);
+        max = intent.getIntExtra(AddPlayersActivity.MAX_POINTS, 200);
+		users = intent.getStringExtra(AddPlayersActivity.USER_LIST);
+		win = intent.getBooleanExtra(AddPlayersActivity.WIN_GAME, false);
 
 		// Create game, setup users
 		game = new Game(max);
@@ -43,6 +48,7 @@ public class GameActivity extends Activity {
 		updateScreen();
 	}
 
+	@SuppressLint("InlinedApi")
 	private void updateScreen() {
 		LinearLayout userList = (LinearLayout) findViewById(R.id.game_user_list);
 		userList.removeAllViews();
@@ -75,10 +81,13 @@ public class GameActivity extends Activity {
 			if (finished) {
 				if (id == winner) {
 					// This is the end
-					TextView win = new TextView(this);
-					win.setText("WINNER!");
-					win.setTextSize(20);
-					editOrWin.addView(win);
+					TextView winText = new TextView(this);
+					if (win)
+						winText.setText("WINNER!");
+					else
+						winText.setText("LOSER!");
+					winText.setTextSize(20);
+					editOrWin.addView(winText);
 					
 					// Remove update button
 					Button update = (Button) findViewById(R.id.game_update_scores);

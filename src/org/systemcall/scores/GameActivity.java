@@ -98,7 +98,7 @@ public class GameActivity extends Activity {
 				// Add points entry
 				EditText addPoints = new EditText(this);
 				addPoints.setId(ID_OFFSET + id);
-				addPoints.setInputType(InputType.TYPE_CLASS_NUMBER);
+				addPoints.setInputType(InputType.TYPE_CLASS_TEXT);
 				addPoints.setTextSize(20);
 				addPoints.setWidth(100);
 				editOrWin.addView(addPoints);
@@ -115,8 +115,12 @@ public class GameActivity extends Activity {
 			EditText points = (EditText) findViewById(ID_OFFSET + id);
 			String pointText = points.getText().toString();
 			if (!pointText.isEmpty()) {
-				int add = Integer.valueOf(pointText);
-				game.getUser(id).addPoint(add);
+                try {
+                    int add = Integer.parseInt(pointText);
+                    game.getUser(id).addPoint(add);
+                } catch (NumberFormatException n) {
+                    // Just don't add if it's not a number
+                }
 			}
 		}
 		updateScreen();

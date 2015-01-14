@@ -100,7 +100,7 @@ public class GameActivity extends Activity {
 				addPoints.setId(ID_OFFSET + id);
 				addPoints.setInputType(InputType.TYPE_CLASS_TEXT);
 				addPoints.setTextSize(20);
-				addPoints.setWidth(100);
+				addPoints.setWidth(200);
 				editOrWin.addView(addPoints);
 			}
 			block.addView(editOrWin);

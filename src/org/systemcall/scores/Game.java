@@ -19,6 +19,9 @@ public class Game {
 	
 	public int winner() {
 		int i;
+        if (maxScore == 0)
+            return NO_WINNER;
+
 		for (i=0; i<users.size(); i++)
 			if (users.get(i).getTotal() > maxScore)
 				return i;

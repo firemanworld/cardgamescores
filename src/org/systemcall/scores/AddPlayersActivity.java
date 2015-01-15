@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -36,8 +37,8 @@ public class AddPlayersActivity extends Activity {
 		}
 		if (u.length() > 0) {
 			String[] us = u.split(",");
-			for(int i = 0 ; i<us.length ; i++)
-				_addUser(us[i]);
+            for (String i : us)
+				_addUser(i);
 		}
 		RadioGroup winGame = (RadioGroup) findViewById(R.id.win_game);
 		if (win)
@@ -50,10 +51,16 @@ public class AddPlayersActivity extends Activity {
 		if (users.isEmpty())
 			return;
 		Intent intent = new Intent(this, GameActivity.class);
-		TextView textView = (TextView) findViewById(R.id.max_score);
-		max = Integer.valueOf(textView.getText().toString());
-		RadioGroup winGame = (RadioGroup) findViewById(R.id.win_game);
-		win = (winGame.getCheckedRadioButtonId() == R.id.win);
+        CheckBox playForeverBox = (CheckBox) findViewById(R.id.play_forever);
+        if (playForeverBox.isChecked()) {
+            max = 0;
+            win = false;
+        } else {
+            TextView textView = (TextView) findViewById(R.id.max_score);
+            max = Integer.valueOf(textView.getText().toString());
+            RadioGroup winGame = (RadioGroup) findViewById(R.id.win_game);
+            win = (winGame.getCheckedRadioButtonId() == R.id.win);
+        }
 		updatePreferences();
 
 		intent.putExtra(USER_LIST, users);
@@ -83,6 +90,17 @@ public class AddPlayersActivity extends Activity {
 		user.setText(userName);
 		userList.addView(user);
 	}
+
+    public void setPlayForever(View view) {
+        CheckBox playForeverBox = (CheckBox) findViewById(R.id.play_forever);
+        TextView textView = (TextView) findViewById(R.id.max_score);
+
+        if (playForeverBox.isChecked()) {
+            textView.setFocusable(false);
+        } else {
+            textView.setFocusableInTouchMode(true);
+        }
+    }
 
 	private void updatePreferences() {
 		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.app_pref_key), Context.MODE_PRIVATE);

@@ -29,7 +29,7 @@ public class GameActivity extends Activity {
 
 	private void initGame() {
         Intent intent = getIntent();
-        max = intent.getIntExtra(AddPlayersActivity.MAX_POINTS, 200);
+        max = intent.getIntExtra(AddPlayersActivity.MAX_POINTS, 0);
 		users = intent.getStringExtra(AddPlayersActivity.USER_LIST);
 		win = intent.getBooleanExtra(AddPlayersActivity.WIN_GAME, false);
 
@@ -98,7 +98,7 @@ public class GameActivity extends Activity {
 				// Add points entry
 				EditText addPoints = new EditText(this);
 				addPoints.setId(ID_OFFSET + id);
-				addPoints.setInputType(InputType.TYPE_CLASS_TEXT);
+				addPoints.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
 				addPoints.setTextSize(20);
 				addPoints.setWidth(200);
 				editOrWin.addView(addPoints);

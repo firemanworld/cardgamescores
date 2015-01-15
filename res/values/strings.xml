@@ -12,6 +12,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_game">Game</string>
     <string name="game_update_scores">Update scores</string>
+    <string name="play_forever">Play Forever?</string>
     <string name="default_max_score">200</string>
     <string name="default_max_score_title">Maximum Score</string>
     <string name="welcome_message">This is a simple score keeping app. Start the game by adding players on the next screen and setting the maximum points to win (or lose). On the game screen, use the text input to update the scores at the end of each round (empty inputs will be considered zero). Whenever one of the scores is higher than the maximum score set, the game stops and the winner (or loser) is announced.</string>

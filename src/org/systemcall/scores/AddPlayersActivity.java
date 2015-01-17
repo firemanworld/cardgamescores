@@ -75,9 +75,6 @@ public class AddPlayersActivity extends Activity {
 		userName = userName.trim();
 		if (userName.length() == 0)
 			return;
-		if (users.length() > 0)
-			users += ",";
-		users += userName;
 		_addUser(userName);
 		textView.setText("");
 	}
@@ -88,6 +85,9 @@ public class AddPlayersActivity extends Activity {
 		TextView user = new TextView(this);
 		user.setTextSize(20);
 		user.setText(userName);
+        if (users.length() > 0)
+            users += ",";
+        users += userName;
 		userList.addView(user);
 	}
 

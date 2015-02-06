@@ -23,7 +23,7 @@ public class Game {
             return NO_WINNER;
 
 		for (i=0; i<users.size(); i++)
-			if (users.get(i).getTotal() > maxScore)
+			if (users.get(i).getTotal() >= maxScore)
 				return i;
 		return NO_WINNER;
 	}

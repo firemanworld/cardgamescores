@@ -14,9 +14,11 @@ import android.widget.TextView;
 public class AddPlayersActivity extends Activity {
 	private String users = "";
 	public final static String MAX_POINTS = "org.systemcall.myfirstapp.MAX_POINTS";
+    public final static String DIFFERENCE_POINTS = "org.systemcall.myfirstapp.DIFFERENCE_POINTS";
 	public final static String USER_LIST = "org.systemcall.myfirstapp.USER_LIST";
 	public final static String WIN_GAME = "org.systemcall.myfirstapp.WIN_GAME";
 	private int max;
+	private int difference;
 	private boolean win;
 
 	@Override
@@ -29,11 +31,16 @@ public class AddPlayersActivity extends Activity {
 	private void initScreen() {
         Intent intent = getIntent();
         max = intent.getIntExtra(AddPlayersActivity.MAX_POINTS, 0);
+        difference = intent.getIntExtra(AddPlayersActivity.DIFFERENCE_POINTS, 0);
 		String u = intent.getStringExtra(AddPlayersActivity.USER_LIST);
 		win = intent.getBooleanExtra(AddPlayersActivity.WIN_GAME, false);
 		if (max > 0) {
 			TextView textView = (TextView) findViewById(R.id.max_score);
 			textView.setText(String.valueOf(max));
+		}
+		if (difference > 0) {
+			TextView textView = (TextView) findViewById(R.id.differenceScore);
+			textView.setText(String.valueOf(difference));
 		}
 		if (u.length() > 0) {
 			String[] us = u.split(",");
@@ -54,10 +61,13 @@ public class AddPlayersActivity extends Activity {
         CheckBox playForeverBox = (CheckBox) findViewById(R.id.play_forever);
         if (playForeverBox.isChecked()) {
             max = 0;
+            difference = 0;
             win = false;
         } else {
             TextView textView = (TextView) findViewById(R.id.max_score);
             max = Integer.valueOf(textView.getText().toString());
+            textView = (TextView) findViewById(R.id.differenceScore);
+            difference = Integer.valueOf(textView.getText().toString());
             RadioGroup winGame = (RadioGroup) findViewById(R.id.win_game);
             win = (winGame.getCheckedRadioButtonId() == R.id.win);
         }
@@ -65,6 +75,7 @@ public class AddPlayersActivity extends Activity {
 
 		intent.putExtra(USER_LIST, users);
 		intent.putExtra(MAX_POINTS, max);
+		intent.putExtra(DIFFERENCE_POINTS, difference);
 		intent.putExtra(WIN_GAME, win);
 		startActivity(intent);
 	}
@@ -93,12 +104,15 @@ public class AddPlayersActivity extends Activity {
 
     public void setPlayForever(View view) {
         CheckBox playForeverBox = (CheckBox) findViewById(R.id.play_forever);
-        TextView textView = (TextView) findViewById(R.id.max_score);
+        TextView maxView = (TextView) findViewById(R.id.max_score);
+        TextView differenceView = (TextView) findViewById(R.id.differenceScore);
 
         if (playForeverBox.isChecked()) {
-            textView.setFocusable(false);
+            maxView.setFocusable(false);
+            differenceView.setFocusable(false);
         } else {
-            textView.setFocusableInTouchMode(true);
+            maxView.setFocusableInTouchMode(true);
+            differenceView.setFocusableInTouchMode(true);
         }
     }
 
@@ -106,6 +120,7 @@ public class AddPlayersActivity extends Activity {
 		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.app_pref_key), Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
 		editor.putInt(getString(R.string.saved_max), max);
+		editor.putInt(getString(R.string.saved_difference), difference);
 		editor.putString(getString(R.string.saved_users), users);
 		editor.putBoolean(getString(R.string.saved_win), win);
 		editor.commit();

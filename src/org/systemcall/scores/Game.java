@@ -7,10 +7,12 @@ import java.util.List;
 public class Game {
 	private List<User> users;
 	private int maxScore;
+    private int differenceScore;
 	
-	public Game (int max) {
+	public Game (int max, int difference) {
 		users = new ArrayList<User>();
 		maxScore = max;
+        differenceScore = difference;
 	}
 	
 	public void addUser(String name) {
@@ -18,7 +20,32 @@ public class Game {
 	}
 	
 	public boolean winner(User user) {
-        return user.getTotal()>=maxScore;
+        if ( user.getTotal()>=maxScore )
+        {
+            sortUsers();
+            int index = users.indexOf(user);
+
+            if (differenceScore > 0)
+            {
+                if (index==0)
+                {
+                    if (users.size()>1)
+                    {
+                        return user.getTotal() - users.get(index + 1).getTotal() >= differenceScore;
+                    }
+                    return true;
+                }
+            }
+            else
+            {
+                if ( index != 0 )
+                {
+                    return user.getTotal() == users.get(0).getTotal();
+                }
+                return true;
+            }
+        }
+        return false;
 	}
 
     public void sortUsers()

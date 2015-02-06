@@ -90,6 +90,26 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/default_difference_score_title" />
+
+            <EditText
+                android:id="@+id/differenceScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/default_max_score_title"
+                android:inputType="numberSigned"
+                android:text="@string/default_difference_score" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="5"
                 android:text="@string/default_score_type_title" />
 

@@ -19,6 +19,7 @@ public class GameActivity extends Activity {
 	private Game game;
 	private int ID_OFFSET = 1024*1024;
 	private int max;
+	private int difference;
 	private String users;
 	private boolean win;
 	
@@ -32,11 +33,12 @@ public class GameActivity extends Activity {
 	private void initGame() {
         Intent intent = getIntent();
         max = intent.getIntExtra(AddPlayersActivity.MAX_POINTS, 0);
+        difference = intent.getIntExtra(AddPlayersActivity.DIFFERENCE_POINTS, 0);
 		users = intent.getStringExtra(AddPlayersActivity.USER_LIST);
 		win = intent.getBooleanExtra(AddPlayersActivity.WIN_GAME, false);
 
 		// Create game, setup users
-		game = new Game(max);
+		game = new Game(max, difference);
 		int cur = 0;
 		while (cur < users.length()) {
 			int pos = users.indexOf(',', cur);
@@ -57,6 +59,7 @@ public class GameActivity extends Activity {
 
 		// Fill screen with users
 		int id;
+        boolean finished = game.winner(game.getUsers().get(0));
 		for (User user:game.getUsers()) {
 			LinearLayout block = new LinearLayout(this); // default horizontal
 			
@@ -76,20 +79,24 @@ public class GameActivity extends Activity {
 
 			LinearLayout editOrWin = new LinearLayout(this); // default horizontal
 			editOrWin.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 2));
-			if (game.winner(user)) {
-                // This is the end
-                TextView winText = new TextView(this);
-                if (win)
-                    winText.setText("WINNER!");
-                else
-                    winText.setText("LOSER!");
-                winText.setTextSize(20);
-                editOrWin.addView(winText);
+			if (finished)
+            {
+                if (game.winner(user))
+                {
+                    // This is the end
+                    TextView winText = new TextView(this);
+                    if (win)
+                        winText.setText("WINNER!");
+                    else
+                        winText.setText("LOSER!");
+                    winText.setTextSize(20);
+                    editOrWin.addView(winText);
 
-                // Remove update button
-                Button update = (Button) findViewById(R.id.game_update_scores);
-                LinearLayout layout = (LinearLayout) findViewById(R.id.update_scores_layout);
-                layout.removeView(update);
+                    // Remove update button
+                    Button update = (Button) findViewById(R.id.game_update_scores);
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.update_scores_layout);
+                    layout.removeView(update);
+                }
 			} else {
 				// Add points entry
 				EditText addPoints = new EditText(this);

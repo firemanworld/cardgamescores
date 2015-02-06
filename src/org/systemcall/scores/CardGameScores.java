@@ -9,6 +9,7 @@ import android.view.View;
 
 public class CardGameScores extends Activity {
 	public final static String MAX_POINTS = "org.systemcall.myfirstapp.MAX_POINTS";
+	public final static String DIFFERENCE_POINTS = "org.systemcall.myfirstapp.DIFFERENCE_POINTS";
 	public final static String USER_LIST = "org.systemcall.myfirstapp.USER_LIST";
 	public final static String WIN_GAME = "org.systemcall.myfirstapp.WIN_GAME";
 
@@ -21,6 +22,7 @@ public class CardGameScores extends Activity {
 	public void newGame(View view) {
 		Intent intent = new Intent(this, AddPlayersActivity.class);
 		intent.putExtra(MAX_POINTS, 200);
+		intent.putExtra(DIFFERENCE_POINTS, 0);
 		intent.putExtra(USER_LIST, "");
 		intent.putExtra(WIN_GAME, false);
 		startActivity(intent);
@@ -29,11 +31,13 @@ public class CardGameScores extends Activity {
 	public void lastGame(View view) {
 		Intent intent = new Intent(this, AddPlayersActivity.class);
 		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.app_pref_key), Context.MODE_PRIVATE);
-		int max = sharedPref.getInt(getString(R.string.saved_max), 0);
+		int max = sharedPref.getInt(getString(R.string.saved_max), 200);
+		int difference = sharedPref.getInt(getString(R.string.saved_difference), 0);
 		String users = sharedPref.getString(getString(R.string.saved_users), "");
 		boolean win = sharedPref.getBoolean(getString(R.string.saved_win), false);
 
 		intent.putExtra(MAX_POINTS, max);
+		intent.putExtra(DIFFERENCE_POINTS, difference);
 		intent.putExtra(USER_LIST, users);
 		intent.putExtra(WIN_GAME, win);
 		startActivity(intent);

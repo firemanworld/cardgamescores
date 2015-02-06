@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.Collections;
+
 public class GameActivity extends Activity {
 	private Game game;
 	private int ID_OFFSET = 1024*1024;
@@ -53,13 +55,9 @@ public class GameActivity extends Activity {
 		LinearLayout userList = (LinearLayout) findViewById(R.id.game_user_list);
 		userList.removeAllViews();
 
-		int winner = game.winner();
-		boolean finished = (winner != Game.NO_WINNER);
-		
 		// Fill screen with users
 		int id;
-		for (id=0; id<game.numUsers(); id++) {
-			User user = game.getUser(id);
+		for (User user:game.getUsers()) {
 			LinearLayout block = new LinearLayout(this); // default horizontal
 			
 			// User name
@@ -78,26 +76,24 @@ public class GameActivity extends Activity {
 
 			LinearLayout editOrWin = new LinearLayout(this); // default horizontal
 			editOrWin.setLayoutParams(new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 2));
-			if (finished) {
-				if (id == winner) {
-					// This is the end
-					TextView winText = new TextView(this);
-					if (win)
-						winText.setText("WINNER!");
-					else
-						winText.setText("LOSER!");
-					winText.setTextSize(20);
-					editOrWin.addView(winText);
-					
-					// Remove update button
-					Button update = (Button) findViewById(R.id.game_update_scores);
-					LinearLayout layout = (LinearLayout) findViewById(R.id.update_scores_layout);
-					layout.removeView(update);
-				}
+			if (game.winner(user)) {
+                // This is the end
+                TextView winText = new TextView(this);
+                if (win)
+                    winText.setText("WINNER!");
+                else
+                    winText.setText("LOSER!");
+                winText.setTextSize(20);
+                editOrWin.addView(winText);
+
+                // Remove update button
+                Button update = (Button) findViewById(R.id.game_update_scores);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.update_scores_layout);
+                layout.removeView(update);
 			} else {
 				// Add points entry
 				EditText addPoints = new EditText(this);
-				addPoints.setId(ID_OFFSET + id);
+				addPoints.setId(ID_OFFSET + user.hashCode());
 				addPoints.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
 				addPoints.setTextSize(20);
 				addPoints.setWidth(200);
@@ -111,18 +107,19 @@ public class GameActivity extends Activity {
 
 	public void updateScores(View view) {
 		int id;
-		for (id=0; id<game.numUsers(); id++) {
-			EditText points = (EditText) findViewById(ID_OFFSET + id);
+		for (User user: game.getUsers()) {
+			EditText points = (EditText) findViewById(ID_OFFSET + user.hashCode());
 			String pointText = points.getText().toString();
 			if (!pointText.isEmpty()) {
                 try {
                     int add = Integer.parseInt(pointText);
-                    game.getUser(id).addPoint(add);
+                    user.addPoint(add);
                 } catch (NumberFormatException n) {
                     // Just don't add if it's not a number
                 }
 			}
 		}
+        game.sortUsers();
 		updateScreen();
 	}
 }

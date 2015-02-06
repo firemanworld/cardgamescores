@@ -1,12 +1,12 @@
 package org.systemcall.scores;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Game {
 	private List<User> users;
 	private int maxScore;
-	public static int NO_WINNER = -1;
 	
 	public Game (int max) {
 		users = new ArrayList<User>();
@@ -17,22 +17,17 @@ public class Game {
 		users.add(new User(name));
 	}
 	
-	public int winner() {
-		int i;
-        if (maxScore == 0)
-            return NO_WINNER;
-
-		for (i=0; i<users.size(); i++)
-			if (users.get(i).getTotal() >= maxScore)
-				return i;
-		return NO_WINNER;
+	public boolean winner(User user) {
+        return user.getTotal()>=maxScore;
 	}
-	
+
+    public void sortUsers()
+    {
+        Collections.sort(users, Collections.reverseOrder());
+    }
+
 	public int numUsers() {
 		return users.size();
 	}
-	
-	public User getUser(int id) {
-		return users.get(id);
-	}
+    public List<User> getUsers() { return users; };
 }
